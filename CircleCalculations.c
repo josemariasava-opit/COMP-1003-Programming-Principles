@@ -34,11 +34,12 @@ int main(){
         perimeter = 2 * PI * radius;
         surface = PI * pow(radius, 2);
 
+        // printing values 
         printf(
             "Diameter: %.2f \nPerimeter: %.2f \nSurface Area: %.2f \n", diameter,perimeter,surface
         );
     }
-    else
+    else // notify user of the wrong input 
     {
         printf("Wrong value for the radius \n");
     }
