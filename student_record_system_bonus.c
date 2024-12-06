@@ -1,39 +1,20 @@
 /*
-Scenario: Student Record Management System
+Challenge 1: Delete Student Record
+Objective: Implement a feature that allows the user to delete a student record by their ID.
+Description:
+When a student record is deleted, ensure that the array is updated to reflect this change. The deleted record should be removed from the list, and subsequent records should be shifted to fill the gap.
+Handle edge cases such as attempting to delete a record that does not exist.
+Example scenario: If a user deletes the record with ID 1001, the system should remove that record and update the array accordingly.
 
-Objective: Develop a C program that demonstrates your understanding of arrays, complex data structures, and functions. This exercise will test your ability to handle real-world scenarios by creating a practical student record management system.
-
-In this assessment, you are required to design and implement a Student Record Management System using the C programming language. This system should allow the user to manage student records and invoke various management functions.
-
-Each student record must include:
-
-Name (string): The full name of the student.
-Age (integer): The age of the student.
-GPA (float): The Grade Point Average of the student.
-Student ID (integer): A unique identifier for each student.
-Instructions:
-
-1. Define a Student Structure:
-
-Create a struct to represent a student with the specified fields.
-2. Implement the Functions:
-
-Implement the following functions to manage student records:
-
-addStudent: Adds a new student to the system.
-searchStudentByID: Searches for a student by their ID and returns the corresponding record.
-displayStudents: Displays all student records in the system.
-3. Create the Main Program:
-
-In the main function, create an array of 50 elements to store student records.
-Implement a menu system to allow users to select actions:
-Add Student
-Search Student by ID
-Display All Students
-Quit
-Use loops and control structures to handle user input and function calls.
-
+Challenge 2: Advanced Search
+Objective: Add an advanced search feature that allows the user to search for students by name or within a GPA range.
+Description:
+Implement a function that enables searching for students either by their full name or by specifying a GPA range (e.g., between 3.0 and 4.0).
+The search results should display all matching student records.
+Handle cases where no records match the search criteria by providing appropriate feedback to the user.
+Example scenario: If a user searches for students named "John Doe" or with a GPA between 3.5 and 4.0, the system should display all records that meet these criteria.
 */
+
 #include <stdio.h> // include standard IO library 
 #include <stdbool.h> // include standard bool library to handle boolean type 
 #include <string.h>  // include string to handle function like strcspn()
@@ -46,12 +27,14 @@ struct Student{
     int id; // member ID, type int | A unique identifier for each student.
 };
 
-// 2. Define the functions 
+// 2. Define the functions
 
-//All the functions are void because manipulates data stored in an array of student, rather than return a specific value 
+// All the functions are void because manipulates data stored in an array of student, rather than return a specific value 
 void addStudent(struct Student students[], int *pCounter);
 void searchStudentByID(struct Student students[], int counter);
 void displayStudents(struct Student students[], int counter);
+void deleteStudent(struct Student studens[], int *pCounter); // Challenge 1 - Delete Student Record
+void advancedSearch(struct Student Student[], int counter); // Challenge 2: Advanced Search
 
 int main(){ 
     // Define array of students
@@ -72,6 +55,7 @@ int main(){
         printf("2: Search Student by ID\n");
         printf("3: Display All Students\n");
         printf("4: Quit\n");
+        printf("5: Challenge 1 - Delete Student Record\n");
         printf("Select your choice\n--------------------------------------------\n");
         scanf("%d", &choice);
 
@@ -89,6 +73,9 @@ int main(){
         case 4:
             printf("Goodbye! See you next time\n");
             run = false;
+            break;
+        case 5:
+            deleteStudent(students, &count);
             break;
         default:
             printf("Invalid input. Try Again with one from the menù. \n");
@@ -175,3 +162,30 @@ void displayStudents(struct Student students[], int counter){
         printf("Name: %s - Age: %d - GPA: %0.2f - ID: %d \n", students[i].name, students[i].age, students[i].gpa, students[i].id);
     }
 }
+
+
+// Challenge 1 - Delete Student Record
+void deleteStudent(struct Student students[], int *pCounter){
+
+    int searchId;
+    printf("Enter ID of the student to delete: ");
+    scanf("%d", &searchId);
+
+    // Loop through the array to find a record with the matching ID from user.
+    for (int i = 0; i < *pCounter; i++ ){ 
+        // check if ID by user match the ID of one of the students 
+        if(students[i].id == searchId){
+            for(int j=i; j<*pCounter-1; j++){ // If the ID is found, shift all subsequent records one position to the left, overwriting the record to be deleted.
+                students[j] = students[j+1];
+            }
+            (*pCounter)--;  // Decrementing pointer to counter - we removed one item from the array of students
+            printf("Student with ID: %d deleted! \n", searchId); // notify user that the user does not exist anymore 
+            return; 
+        }
+    }
+    // Notify the user that the requested user does not exist
+    printf("The student with ID: %d does not exist.\n", searchId);
+
+}
+
+// Challenge 2 - Delete Student Record
