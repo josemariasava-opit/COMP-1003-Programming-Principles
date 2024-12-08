@@ -180,11 +180,11 @@ void deleteStudent(struct Student students[], int *pCounter){
     for (int i = 0; i < *pCounter; i++ ){ 
         // check if ID by user match the ID of one of the students 
         if(students[i].id == searchId){
-            for(int j=i; j<*pCounter-1; j++){ // If the ID is found, shift all subsequent records one position to the left, overwriting the record to be deleted.
+            for(int j=i; j<*pCounter-1; j++){ // If the ID is found, shift all next records one position to the left, overwriting the record to be deleted.
                 students[j] = students[j+1];
             }
             (*pCounter)--;  // Decrementing pointer to counter - we removed one item from the array of students
-            printf("Student with ID: %d deleted! \n", searchId); // notify user that the user does not exist anymore 
+            printf("Student with ID: %d deleted! \n", searchId); // notify user that the student does not exist anymore 
             return; 
         }
     }
@@ -197,6 +197,7 @@ void deleteStudent(struct Student students[], int *pCounter){
 
 void advancedSearch(struct Student students[], int counter){
 
+    // var decaration 
     int criteria;
     char searchName[50];
     float min, max;
@@ -218,6 +219,7 @@ void advancedSearch(struct Student students[], int counter){
         } 
     }else if (criteria == 2) // search by GPA Range 
     {
+        // ask user to enter the range of GPA
         printf("Enter the min value for GPA: ");
         scanf("%f", &min);
         printf("Enter the max value fot GPA: ");
