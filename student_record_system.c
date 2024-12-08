@@ -67,12 +67,12 @@ int main(){
     // while loop - continue until the run var is true 
     while (run)
     {
-        printf("\n### Student Record Management System ###\n");
+        printf("\n### Student Record Management System ###\n--------------------------------------------\n");
         printf("1: Add a new student \n");
         printf("2: Search Student by ID\n");
         printf("3: Display All Students\n");
         printf("4: Quit\n");
-        printf("Select your choice\n--------------------------------------------\n");
+        printf("--------------------------------------------\nSelect your choice\n");
         scanf("%d", &choice);
 
         switch (choice)

@@ -34,12 +34,12 @@ void addStudent(struct Student students[], int *pCounter);
 void searchStudentByID(struct Student students[], int counter);
 void displayStudents(struct Student students[], int counter);
 void deleteStudent(struct Student studens[], int *pCounter); // Challenge 1 - Delete Student Record
-void advancedSearch(struct Student Student[], int counter); // Challenge 2: Advanced Search
+void advancedSearch(struct Student students[], int counter); // Challenge 2: Advanced Search
 
 int main(){ 
     // Define array of students
     struct Student students[50];
-    int count = 0; //counter of students
+    int count = 0; //counter of students - keeps track of number of student created and stored
     int choice; // choice of the user, will be used in switch-case statement
     //int *pCount = NULL;
 
@@ -50,13 +50,14 @@ int main(){
     // while loop - continue until the run var is true 
     while (run)
     {
-        printf("\n### Student Record Management System ###\n");
+        printf("\n### Student Record Management System ###\n--------------------------------------------\n");
         printf("1: Add a new student \n");
         printf("2: Search Student by ID\n");
         printf("3: Display All Students\n");
         printf("4: Quit\n");
         printf("5: Challenge 1 - Delete Student Record\n");
-        printf("Select your choice\n--------------------------------------------\n");
+        printf("6: Challenge 2 - Advanced Search\n");
+        printf("--------------------------------------------\nSelect your choice\n");
         scanf("%d", &choice);
 
         switch (choice)
@@ -77,12 +78,16 @@ int main(){
         case 5:
             deleteStudent(students, &count);
             break;
+        case 6:
+            advancedSearch(students,count);
+            break;
         default:
             printf("Invalid input. Try Again with one from the menù. \n");
             break;
         }
     }
     return 0;
+
 }
 
 /*
@@ -118,7 +123,7 @@ void addStudent(struct Student students[], int *pCounter){
     printf("Enter student ID: ");
     scanf("%d", &students[*pCounter].id);
 
-    printf("Record for student with ID:%d saved successfully\n", students[*pCounter].id);
+    printf("\nRecord for student with ID:%d saved successfully\n", students[*pCounter].id);
     (*pCounter)++;
 }
 
@@ -188,4 +193,47 @@ void deleteStudent(struct Student students[], int *pCounter){
 
 }
 
-// Challenge 2 - Delete Student Record
+// Challenge 2 - Advanced Search
+
+void advancedSearch(struct Student students[], int counter){
+
+    int criteria;
+    char searchName[50];
+    float min, max;
+    printf("1: to search by student name\n2: search within a GPA range\n");
+    scanf("%d", &criteria);
+
+    if(criteria == 1){  // search by Name
+        printf("Enter the name of the student to search "); // ask user about the name to search 
+        getchar(); // Clean the buffer from new line char 
+        fgets(searchName,sizeof(searchName),stdin); // get the name by the user 
+        searchName[strcspn(searchName, "\n")] = '\0'; // Remove the newline from the input after the use of fgets() 
+
+        // Loop the array of students to search the match of the name
+        for (int i = 0; i < counter; i++)
+        {
+            if(strcmp(students[i].name,searchName)==0){  // compare names with strcmp() if the name searched match one student
+                printf("Name: %s - Age: %d - GPA: %0.2f - ID: %d \n", students[i].name, students[i].age, students[i].gpa, students[i].id); // display all student records if name matches
+            }
+        } 
+    }else if (criteria == 2) // search by GPA Range 
+    {
+        printf("Enter the min value for GPA: ");
+        scanf("%f", &min);
+        printf("Enter the max value fot GPA: ");
+        scanf("%f", &max);
+
+        // Loop the array of students to search the match of the GPA 
+        for (int i = 0; i < counter; i++)
+        {
+            if (students[i].gpa >= min && students[i].gpa <= max) // check if gpa of student[i] is in the range entered by the user 
+            {
+                printf("Name: %s - Age: %d - GPA: %0.2f - ID: %d \n", students[i].name, students[i].age, students[i].gpa, students[i].id); // display all student records if name matches
+            }
+            
+        } 
+    }else
+    {
+        printf("Invalid choice for advanced search! \n");
+    }
+}
