@@ -58,15 +58,13 @@ int main(){
     struct Student students[50];
     int count = 0; //counter of students
     int choice; // choice of the user, will be used in switch-case statement
-    //int *pCount = NULL;
-
-    //pCount = &count;
 
     bool run = true; // var to run the loop menù 
 
     // while loop - continue until the run var is true 
     while (run)
     {
+        // Menù for the user - manage everything from here
         printf("\n### Student Record Management System ###\n--------------------------------------------\n");
         printf("1: Add a new student \n");
         printf("2: Search Student by ID\n");
@@ -78,17 +76,17 @@ int main(){
         switch (choice)
         {
         case 1:
-            addStudent(students,&count);
+            addStudent(students,&count); // calling the function
             break;
         case 2:
-            searchStudentByID(students,count);
+            searchStudentByID(students,count); // calling the function
             break;
         case 3:
-            displayStudents(students, count);
+            displayStudents(students, count); // calling the function
             break;
         case 4:
             printf("Goodbye! See you next time\n");
-            run = false;
+            run = false; // flag to stop the execution of while loop
             break;
         default:
             printf("Invalid input. Try Again with one from the menù. \n");
@@ -129,14 +127,14 @@ void addStudent(struct Student students[], int *pCounter){
     scanf("%f", &students[*pCounter].gpa); // store GPA record
 
     printf("Enter student ID: ");
-    scanf("%d", &students[*pCounter].id);
+    scanf("%d", &students[*pCounter].id); // store ID recors
 
-    printf("Record for student with ID:%d saved successfully\n", students[*pCounter].id);
-    (*pCounter)++;
+    printf("Record for student with ID:%d saved successfully\n", students[*pCounter].id); // Notify user    
+    (*pCounter)++; // Increment pointer to counter var - we need to know how many students we have  
 }
 
 /*
-Input the user ID and get back all the information and record of the requested sudent. 
+Input the user ID and get back all the information and record of the requested student. 
 */
 void searchStudentByID(struct Student students[], int counter){
 
@@ -153,7 +151,7 @@ void searchStudentByID(struct Student students[], int counter){
             printf("Age:%d\n", students[i].age);
             printf("GPA:%0.2f\n",students[i].gpa);
             printf("ID:%d\n", students[i].id);
-            return;
+            return; 
         }
     }
     // Notify the user that the requested user does not exist
@@ -165,11 +163,12 @@ void searchStudentByID(struct Student students[], int counter){
 void displayStudents(struct Student students[], int counter){
     // Safety first, if we don't have record display a message to the user
     if(counter == 0){
-        printf("No record present - add at least one student record \n");
+        printf("No record present - add at least one student record \n"); 
         return;
     } 
 
     printf("Here below all the students record inside our system\n");
+    // loop the array of sudents to print all the records stored in our system
     for (int i = 0; i < counter; i++)
     {
         printf("Name: %s - Age: %d - GPA: %0.2f - ID: %d \n", students[i].name, students[i].age, students[i].gpa, students[i].id);
